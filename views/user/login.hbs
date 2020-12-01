@@ -1,0 +1,32 @@
+{{!-- <header>
+        <nav>
+            <ul>
+                <li class="site-logo">Shoe</li>
+                <li>
+                    <a href="">
+                        <img src="../public/sneakers.png" alt="">
+                    </a>
+                </li>
+                <li class="site-logo">Shelf</li>
+            </ul>
+        </nav>
+    </header> --}}
+<main>
+    <h1>Login</h1>
+    <p class="form-info">Don't have account?
+        <a href="/user/register">Register now</a> and fix that!
+    </p>
+    <form action="/user/login" method="POST">
+        <div>
+            <input type="email" name="email" placeholder="Email...">
+        </div>
+
+        <div>
+            <input type="password" name="password" placeholder="Password...">
+        </div>
+        <div>
+            <p class="message"></p>
+            <button>Login</button>
+        </div>
+    </form>
+</main>
