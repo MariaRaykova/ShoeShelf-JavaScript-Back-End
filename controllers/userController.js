@@ -15,45 +15,44 @@ module.exports = {
         },
         logout(req, res, next) {
             res
-            .clearCookie(cookie)
-            .redirect('/home/');
+                .clearCookie(cookie)
+                .redirect('/home/');
         }
     },
     post: {
         register(req, res, next) {
             const { email, fullName, password } = { ...req.body };
             User.findOne({ email }).then((user) => {
-                    if (user) {
-                        throw new Error('The given email is already in use...')
-                    }
-                    return User.create({ email, fullName, password})
-                }).then((createdUser) => { //идеята е да си хендълваме промисите надолу, не на страни. Връщаме като резултат нов промис и го хендълваме в долния then
-                    console.log(createdUser)
-                    res.redirect('/user/login');
-                }).catch((e) => {
-                    console.log(e);
-                    res.redirect('/user/register');
-                })
+                if (user) {
+                    throw new Error('The given email is already in use...')
+                }
+                return User.create({ email, fullName, password })
+            }).then((createdUser) => {
+                console.log(createdUser)
+                res.redirect('/user/login');
+            }).catch((e) => {
+                console.log(e);
+                res.redirect('/user/register');
+            })
         },
-
         login(req, res, next) {
             const { email, password } = req.body;
 
             User.findOne({ email }).then((user) => {
-               return Promise.all([ //приема масив от промиси и ще получим масив от респонси на тези заявки
-                 user.comparePasswords(password),
-                 user
+                return Promise.all([
+                    user.comparePasswords(password),
+                    user
                 ])
-            }).then(([isPasswordsMatched, user]) =>{
-               
-                if(!isPasswordsMatched){
+            }).then(([isPasswordsMatched, user]) => {
+
+                if (!isPasswordsMatched) {
                     throw new Error('The provided password does not matched.')
                 }
                 const token = jwt.createToken(user._id);
                 res
-                .status(200)
-                .cookie(cookie, token, { maxAge: 3600000 })
-                .redirect('/shoes/shoes')
+                    .status(200)
+                    .cookie(cookie, token, { maxAge: 3600000 })
+                    .redirect('/shoes/shoes')
             }).catch((e) => {
                 console.log(e);
                 res.redirect('/user/register');

@@ -1,12 +1,9 @@
-
-
 module.exports = (mongoose) => {
 
     const { Schema, model: Model } = mongoose;
     const { String, ObjectId, Number } = Schema.Types;
 
     const shoeSchema = new Schema({
-
         name: {
             type: String,
             required: true,
@@ -31,7 +28,7 @@ module.exports = (mongoose) => {
             type: ObjectId,
             required: true,
         },
-        buyers: [ //ще е колекция/масив, елементите вътре ще са от тип objectId
+        buyers: [ 
             {
                 type: ObjectId,
                 ref: 'User',

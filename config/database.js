@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const dbConnectionString = require('./').dbUrl;
 
-const dbConnectionOptions = { //когато стартираме конзолата да не излизат деприкейтнатите неща
+const dbConnectionOptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true, 
+    useUnifiedTopology: true,
     useCreateIndex: true
 };
 
 module.exports = () => {
-return mongoose.connect(dbConnectionString, dbConnectionOptions);
+    return mongoose.connect(dbConnectionString, dbConnectionOptions);
 }
