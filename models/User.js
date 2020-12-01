@@ -7,7 +7,6 @@ module.exports = (mongoose, bcrypt) => {
     const { String, ObjectId } = Schema.Types;
 
     const userSchema = new Schema({
-
         email: {
             type: String,
             required: true,
@@ -21,7 +20,7 @@ module.exports = (mongoose, bcrypt) => {
             type: String,
             required: true,
         },
-        offersBought: [ //ще е колекция/масив, елементите вътре ще са от тип objectId
+        offersBought: [
             {
                 type: ObjectId,
                 ref: 'Shoe',
@@ -30,19 +29,19 @@ module.exports = (mongoose, bcrypt) => {
     });
 
     userSchema.methods = {
-        comparePasswords(password){
+        comparePasswords(password) {
             return bcrypt.compare(password, this.password)
         }
     }
 
-    userSchema.pre('save', function(next) {
+    userSchema.pre('save', function (next) {
 
-        if(!this.isModified('password')){
+        if (!this.isModified('password')) {
             next();
             return;
         }
         bcrypt.genSalt(saltRounds, (err, salt) => {
-            if (err) { //ако тук или долу в hash имаме грешка, ще я хендълнем в catch-a na create user в userController
+            if (err) {
                 next(err);
                 return;
             }
@@ -56,6 +55,6 @@ module.exports = (mongoose, bcrypt) => {
             })
         })
     })
-
+    
     return Model('User', userSchema);
 };
