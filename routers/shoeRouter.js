@@ -5,8 +5,10 @@ module.exports = (router) => { //функия, която приема раут�
   router.get('/create',shoeController.get.create);
    router.get('/details/:shoeId',shoeController.get.details);
    router.get('/shoes/details/:shoeId',shoeController.get.details);
-   router.get('/edit',shoeController.get.edit);
+   router.get('/edit/:shoeId',shoeController.get.edit);
+   router.get('/delete/:shoeId',shoeController.get.delete);
 
    router.post('/create',shoeController.post.create);
+   router.post('/edit/:shoeId',shoeController.post.edit);
   return router;
 }
