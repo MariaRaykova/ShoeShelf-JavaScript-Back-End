@@ -15,8 +15,8 @@ module.exports = {
         },
         logout(req, res, next) {
             res
-            .clearCookie()
-            .render('./home/home.hbs');
+            .clearCookie(cookie)
+            .redirect('/home/');
         }
     },
     post: {
@@ -50,8 +50,10 @@ module.exports = {
                     throw new Error('The provided password does not matched.')
                 }
                 const token = jwt.createToken(user._id);
-               
-                res.status(200).cookie(cookie, token, { maxAge: 3600000 }).redirect('/shoes/shoes')
+                res
+                .status(200)
+                .cookie(cookie, token, { maxAge: 3600000 })
+                .redirect('/shoes/shoes')
             }).catch((e) => {
                 console.log(e);
                 res.redirect('/user/register');
