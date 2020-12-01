@@ -23,6 +23,7 @@ module.exports = {
     },
     post: {
         register(req, res, next) {
+
             const formValidations = formValidator(req);
 
             if (!formValidations.isOk) { 
@@ -46,6 +47,13 @@ module.exports = {
             })
         },
         login(req, res, next) {
+
+            const formValidations = formValidator(req);
+            if (!formValidations.isOk) { 
+                res.render('./user/login.hbs', formValidations.contextOptions) 
+                return; 
+            }
+            
             const { email, password } = req.body;
 
             User.findOne({ email }).then((user) => {
